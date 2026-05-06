@@ -1849,8 +1849,8 @@ export const swarm_spawn_subtask = tool({
     // Use placeholder config - actual config should be passed from coordinator
     // For now, we use reasonable defaults
     const config = {
-      primaryModel: "anthropic/claude-sonnet-4-5",
-      liteModel: "anthropic/claude-haiku-4-5",
+      primaryModel: "opencode-go/kimi-k2.6",
+      liteModel: "google/gemini-3-flash-preview",
     };
     
     const selectedModel = selectWorkerModel(subtask, config);
