@@ -10,14 +10,20 @@ import type { DecomposedSubtask } from "./schemas/task";
 
 // Mock config type matching expected SwarmConfig structure
 interface TestConfig {
-  primaryModel: string;
+  primaryModel?: string;
   liteModel?: string;
+  workerVendor?: any;
+  workerModel?: string;
+  liteVendor?: any;
 }
 
 describe("selectWorkerModel", () => {
+  // Use our new preferred vendors and models for testing
   const mockConfig: TestConfig = {
-    primaryModel: "anthropic/claude-sonnet-4-5",
-    liteModel: "anthropic/claude-haiku-4-5",
+    workerVendor: "opencode-go",
+    workerModel: "kimi-k2.6",
+    liteVendor: "google",
+    liteModel: "gemini-3-flash-preview",
   };
 
   test("uses explicit model field from subtask when provided", () => {
@@ -26,11 +32,12 @@ describe("selectWorkerModel", () => {
       description: "Update README",
       files: ["README.md"],
       estimated_effort: "trivial",
-      model: "anthropic/claude-opus-4-5", // Explicit override
+      model: "opencode-go/deepseek-v4-pro", // Explicit override
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-opus-4-5");
+    expect(result.vendor).toBe("opencode-go");
+    expect(result.model).toBe("deepseek-v4-pro");
   });
 
   test("uses liteModel for all markdown files", () => {
@@ -42,7 +49,8 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    expect(result.vendor).toBe("google");
+    expect(result.model).toBe("gemini-3-flash-preview");
   });
 
   test("uses liteModel for all MDX files", () => {
@@ -54,7 +62,8 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    expect(result.vendor).toBe("google");
+    expect(result.model).toBe("gemini-3-flash-preview");
   });
 
   test("uses liteModel for test files with .test. pattern", () => {
@@ -66,7 +75,8 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    expect(result.vendor).toBe("google");
+    expect(result.model).toBe("gemini-3-flash-preview");
   });
 
   test("uses liteModel for test files with .spec. pattern", () => {
@@ -78,10 +88,11 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    expect(result.vendor).toBe("google");
+    expect(result.model).toBe("gemini-3-flash-preview");
   });
 
-  test("uses primaryModel when files are mixed (code + docs)", () => {
+  test("uses workerModel when files are mixed (code + docs)", () => {
     const subtask: DecomposedSubtask = {
       title: "Implement feature with docs",
       description: "Add feature and document it",
@@ -90,10 +101,11 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-sonnet-4-5");
+    expect(result.vendor).toBe("opencode-go");
+    expect(result.model).toBe("kimi-k2.6");
   });
 
-  test("uses primaryModel when files are mixed (code + tests)", () => {
+  test("uses workerModel when files are mixed (code + tests)", () => {
     const subtask: DecomposedSubtask = {
       title: "Implement feature with tests",
       description: "Add feature and tests",
@@ -102,10 +114,11 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-sonnet-4-5");
+    expect(result.vendor).toBe("opencode-go");
+    expect(result.model).toBe("kimi-k2.6");
   });
 
-  test("uses primaryModel for implementation files", () => {
+  test("uses workerModel for implementation files", () => {
     const subtask: DecomposedSubtask = {
       title: "Implement auth",
       description: "Add authentication",
@@ -114,13 +127,15 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-sonnet-4-5");
+    expect(result.vendor).toBe("opencode-go");
+    expect(result.model).toBe("kimi-k2.6");
   });
 
-  test("defaults to primaryModel when liteModel not configured", () => {
+  test("defaults to fallback liteModel when liteModel not configured", () => {
     const configWithoutLite: TestConfig = {
-      primaryModel: "anthropic/claude-sonnet-4-5",
-      // liteModel is undefined
+      workerVendor: "opencode",
+      workerModel: "nemotron-3-super-free",
+      // liteModel and liteVendor are undefined
     };
 
     const subtask: DecomposedSubtask = {
@@ -131,26 +146,28 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, configWithoutLite);
-    expect(result).toBe("anthropic/claude-sonnet-4-5");
+    // Inherits workerVendor, then looks up default for that vendor
+    expect(result.vendor).toBe("opencode");
+    expect(result.model).toBe("nemotron-3-super-free");
   });
 
-  test("falls back to claude-haiku when liteModel not configured but primaryModel missing", () => {
-    const emptyConfig: TestConfig = {
-      primaryModel: "",
-    };
+  test("falls back to default worker model when entirely unconfigured", () => {
+    const emptyConfig: TestConfig = {};
 
     const subtask: DecomposedSubtask = {
-      title: "Update docs",
-      description: "Update README",
-      files: ["README.md"],
+      title: "Implement code",
+      description: "Code",
+      files: ["src/main.ts"],
       estimated_effort: "trivial",
     };
 
     const result = selectWorkerModel(subtask, emptyConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    // Should fall back to opencode-go default logic
+    expect(result.vendor).toBe("opencode-go");
+    expect(result.model).toBe("deepseek-v4-pro");
   });
 
-  test("handles empty files array by defaulting to primaryModel", () => {
+  test("handles empty files array by defaulting to workerModel", () => {
     const subtask: DecomposedSubtask = {
       title: "Research task",
       description: "Investigate options",
@@ -159,10 +176,11 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-sonnet-4-5");
+    expect(result.vendor).toBe("opencode-go");
+    expect(result.model).toBe("kimi-k2.6");
   });
 
-  test("handles mixed markdown and mdx files", () => {
+  test("handles mixed markdown and mdx files using liteModel", () => {
     const subtask: DecomposedSubtask = {
       title: "Update all docs",
       description: "Update docs",
@@ -171,7 +189,8 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    expect(result.vendor).toBe("google");
+    expect(result.model).toBe("gemini-3-flash-preview");
   });
 
   test("case insensitive file extension matching", () => {
@@ -183,6 +202,7 @@ describe("selectWorkerModel", () => {
     };
 
     const result = selectWorkerModel(subtask, mockConfig);
-    expect(result).toBe("anthropic/claude-haiku-4-5");
+    expect(result.vendor).toBe("google");
+    expect(result.model).toBe("gemini-3-flash-preview");
   });
 });
