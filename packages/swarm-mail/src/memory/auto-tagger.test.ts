@@ -23,7 +23,7 @@ const SKIP_LLM_TESTS = !RUN_LLM_TESTS || !HAS_API_KEY || IS_CI;
 describe("generateTags", () => {
   // Config for tests - requires real API key
   const testConfig = {
-    model: "anthropic/claude-haiku-4-5",
+    model: "opencode-go/deepseek-v4-flash",
     apiKey: process.env.AI_GATEWAY_API_KEY || "",
   };
 
