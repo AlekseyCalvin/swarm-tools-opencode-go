@@ -88,7 +88,7 @@ const TaxonomyExtractionSchema = z.object({
  *     { name: "React Hooks", entityType: "concept" },
  *     { name: "useState", entityType: "concept" }
  *   ],
- *   { model: "anthropic/claude-haiku-4-5", apiKey: process.env.API_KEY }
+ *   { model: "opencode-go/deepseek-v4-flash", apiKey: process.env.API_KEY }
  * );
  *
  * // With Ollama LanguageModel instance
