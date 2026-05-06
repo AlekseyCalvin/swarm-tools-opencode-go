@@ -1,7 +1,8 @@
-# SWARM: OpenCode GO Style (May '26)
-**Updated for Builders on the Proletarian Plan**
-This version features the whole OpenCode GO model roster + some fresher GPT/Geminis & freebies in place of SWARM's wired-in Claude-defaults & archaic fallbacks.
-### Branch Installation (OpenCode)
+#  SWARM: OpenCode GO Augmented
+## ╔ **Revived for Builders on the Proletarian Plan** ╗  <br>
+with the OpenCode GO model roster + fresher GPT/Geminis & freebies <br>
+in place of o.g. SWARM's wired-in Claude-defaults & archaic fallbacks.
+#### Branch Installation (OpenCode)
 ```bash
 git clone https://github.com/AlekseyCalvin/swarm-tools-opencode-go.git
 cd swarm-tools-opencode-go
@@ -13,7 +14,6 @@ bun link
 swarm setup
 ```
 *`rm -rf apps` cuts out many random monorepo dependencies gratuitous to most SWARM integrations.*
-
 ```
  ███████╗██╗    ██╗ █████╗ ██████╗ ███╗   ███╗
  ██╔════╝██║    ██║██╔══██╗██╔══██╗████╗ ████║
@@ -21,13 +21,11 @@ swarm setup
  ╚════██║██║███╗██║██╔══██║██╔══██╗██║╚██╔╝██║
  ███████║╚███╔███╔╝██║  ██║██║  ██║██║ ╚═╝ ██║
  ╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
+ ╚█ YOUR CONTEXTUALLY DEATHLESS MULTI-AGENT █╗
 ```
-*Revitalized multi-agent: still survives context death.*
-
 Break big tasks into small ones. Spawn agents to work in parallel. Learn from what works.
 [![npm version](https://img.shields.io/npm/v/opencode-swarm-plugin.svg)](https://www.npmjs.com/package/opencode-swarm-plugin)
 [![Documentation](https://img.shields.io/badge/docs-swarmtools.ai-blue)](https://swarmtools.ai/docs)
-
 ---
 
 ## Original Installation Guide
