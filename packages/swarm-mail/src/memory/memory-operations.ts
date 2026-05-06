@@ -32,7 +32,7 @@
  * const operation = await analyzeMemoryOperation(
  *   newInformation,
  *   existingMemories,
- *   { model: 'anthropic/claude-haiku-4-5', apiKey: process.env.AI_GATEWAY_API_KEY }
+ *   { model: 'opencode-go/deepseek-v4-flash', apiKey: process.env.AI_GATEWAY_API_KEY }
  * );
  *
  * // 3. Execute the decision
@@ -129,7 +129,7 @@ const MemoryOperationSchema = z.object({
  * const operation = await analyzeMemoryOperation(
  *   "OAuth tokens need 5-minute refresh buffer",
  *   existingMemories,
- *   { model: "anthropic/claude-haiku-4-5", apiKey: "..." }
+ *   { model: "opencode-go/deepseek-v4-flash", apiKey: "..." }
  * );
  * ```
  */
