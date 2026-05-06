@@ -134,7 +134,7 @@ const ExtractionSchema = z.object({
  * // With model string (Anthropic via AI Gateway)
  * const result = await extractEntitiesAndRelationships(
  *   "Joel prefers TypeScript for Next.js",
- *   { model: "anthropic/claude-haiku-4-5", apiKey: process.env.API_KEY }
+ *   { model: "opencode-go/deepseek-v4-flash", apiKey: process.env.API_KEY }
  * );
  *
  * // With Ollama LanguageModel instance
