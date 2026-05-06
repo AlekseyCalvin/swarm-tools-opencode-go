@@ -68,7 +68,7 @@ const sampleMemories: Memory[] = [
 ];
 
 const testConfig = {
-  model: "anthropic/claude-haiku-4-5",
+  model: "opencode-go/deepseek-v4-flash",
   apiKey: process.env.AI_GATEWAY_API_KEY || "",
 };
 
