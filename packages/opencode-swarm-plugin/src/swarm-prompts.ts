@@ -1893,7 +1893,7 @@ export const swarm_spawn_subtask = tool({
         workerName: "worker", // Will be set at swarmmail_init
         subtaskTitle: args.subtask_title,
         files: args.files,
-        model: selectedModel,
+        model: `${selectedModel.vendor}/${selectedModel.model}`,
         spawnOrder: 0, // TODO: Query existing worker_spawned events for this epic
         isParallel: false, // TODO: Detect from coordinator strategy
         rationale: args.subtask_description || `Spawning worker for: ${args.subtask_title}`,
