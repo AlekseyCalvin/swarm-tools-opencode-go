@@ -475,58 +475,32 @@ interface ModelOption {
   value: string;
   label: string;
   hint: string;
+  envVars?: string[];  // Environment variables required by this option
 }
 
-const COORDINATOR_MODELS: ModelOption[] = [
-  {
-    value: "anthropic/claude-sonnet-4-5",
-    label: "Claude Sonnet 4.5",
-    hint: "Best balance of speed and capability (recommended)",
-  },
-  {
-    value: "anthropic/claude-opus-4-5",
-    label: "Claude Opus 4.5",
-    hint: "Most capable, slower and more expensive",
-  },
-  {
-    value: "openai/gpt-4o",
-    label: "GPT-4o",
-    hint: "Fast, good for most tasks",
-  },
-  {
-    value: "google/gemini-2.0-flash",
-    label: "Gemini 2.0 Flash",
-    hint: "Fast and capable",
-  },
-  {
-    value: "google/gemini-1.5-pro",
-    label: "Gemini 1.5 Pro",
-    hint: "More capable, larger context",
-  },
+const ALL_MODELS: ModelOption[] = [
+  { value: "opencode-go/deepseek-v4-pro", label: "DeepSeek V4 Pro", hint: "Top tier reasoning" },
+  { value: "opencode-go/kimi-k2.6", label: "Kimi K2.6", hint: "3x limits" },
+  { value: "google/gemini-3-flash-preview", label: "Gemini 3 Flash", hint: "Fast context" },
+  { value: "opencode-go/deepseek-v4-flash", label: "DeepSeek V4 Flash", hint: "Fast reasoning" },
+  { value: "opencode-go/kimi-k2.5", label: "Kimi K2.5", hint: "Standard Kimi" },
+  { value: "opencode-go/glm-5", label: "GLM-5", hint: "Advanced GLM" },
+  { value: "opencode-go/glm-5.1", label: "GLM-5.1", hint: "Latest GLM" },
+  { value: "opencode-go/mimo-v2-omni", label: "MiMo V2 Omni", hint: "Multimodal" },
+  { value: "opencode-go/mimo-v2-pro", label: "MiMo V2 Pro", hint: "Advanced MiMo" },
+  { value: "opencode-go/minimax-m2.7", label: "MiniMax M2.7", hint: "Peak performance" },
+  { value: "opencode-go/minimax-m2.5", label: "MiniMax M2.5", hint: "Standard MiniMax" },
+  { value: "opencode-go/qwen3.6-plus", label: "Qwen3.6 Plus", hint: "Latest Qwen" },
+  { value: "opencode-go/qwen3.5-plus", label: "Qwen3.5 Plus", hint: "Standard Qwen" },
+  { value: "opencode/nemotron-3-super-free", label: "Nemotron 3 Super", hint: "OpenCode Zen Free" },
+  { value: "opencode/hy3-preview-free", label: "HY3 Preview", hint: "OpenCode Zen Free" },
+  { value: "google/gemini-3.1-pro-preview-customtools", label: "Gemini 3.1 Pro", hint: "Advanced routing" },
+  { value: "openai/gpt-5-4-mini", label: "GPT-5.4 Mini", hint: "Fast, cheap" }
 ];
 
-const WORKER_MODELS: ModelOption[] = [
-  {
-    value: "anthropic/claude-haiku-4-5",
-    label: "Claude Haiku 4.5",
-    hint: "Fast and cost-effective (recommended)",
-  },
-  {
-    value: "anthropic/claude-sonnet-4-5",
-    label: "Claude Sonnet 4.5",
-    hint: "More capable, slower",
-  },
-  {
-    value: "openai/gpt-4o-mini",
-    label: "GPT-4o Mini",
-    hint: "Fast and cheap",
-  },
-  {
-    value: "google/gemini-2.0-flash",
-    label: "Gemini 2.0 Flash",
-    hint: "Fast and capable",
-  },
-];
+const COORDINATOR_MODELS: ModelOption[] = ALL_MODELS;
+const WORKER_MODELS: ModelOption[] = ALL_MODELS;
+const LITE_MODELS: ModelOption[] = ALL_MODELS;
 
 // ============================================================================
 // Update Checking
@@ -2211,7 +2185,7 @@ async function setup(forceReinstall = false, nonInteractive = false) {
       const coordinatorModel = await p.select({
         message: "Select coordinator model:",
         options: COORDINATOR_MODELS,
-        initialValue: "anthropic/claude-sonnet-4-5",
+        initialValue: "opencode-go/deepseek-v4-pro",
       });
 
       if (p.isCancel(coordinatorModel)) {
@@ -2222,7 +2196,7 @@ async function setup(forceReinstall = false, nonInteractive = false) {
       const workerModel = await p.select({
         message: "Select worker model:",
         options: WORKER_MODELS,
-        initialValue: "anthropic/claude-haiku-4-5",
+        initialValue: "opencode-go/kimi-k2.6",
       });
 
       if (p.isCancel(workerModel)) {
@@ -2524,11 +2498,11 @@ async function setup(forceReinstall = false, nonInteractive = false) {
   }
 
   // Model defaults: opus for coordinator, sonnet for worker, haiku for lite
-  const DEFAULT_COORDINATOR = "anthropic/claude-opus-4-5";
-  const DEFAULT_WORKER = "anthropic/claude-sonnet-4-5";
-  const DEFAULT_LITE = "anthropic/claude-haiku-4-5";
+// Model defaults: use vendor types for flexibility
+  const DEFAULT_COORDINATOR = "opencode-go/deepseek-v4-pro";
+  const DEFAULT_WORKER = "opencode-go/kimi-k2.6";
+  const DEFAULT_LITE = "google/gemini-3-flash-preview";
 
-  // Model selection (skip if non-interactive)
   let coordinatorModel: string;
   let workerModel: string;
   let liteModel: string;
@@ -2547,43 +2521,7 @@ async function setup(forceReinstall = false, nonInteractive = false) {
 
     const selectedCoordinator = await p.select({
       message: "Select coordinator model (for orchestration/planning):",
-      options: [
-        {
-          value: "anthropic/claude-opus-4-5",
-          label: "Claude Opus 4.5",
-          hint: "Most capable, best for complex orchestration (recommended)",
-        },
-        {
-          value: "anthropic/claude-sonnet-4-5",
-          label: "Claude Sonnet 4.5",
-          hint: "Good balance of speed and capability",
-        },
-        {
-          value: "anthropic/claude-haiku-4-5",
-          label: "Claude Haiku 4.5",
-          hint: "Fast and cost-effective",
-        },
-        {
-          value: "openai/gpt-4o",
-          label: "GPT-4o",
-          hint: "Fast, good for most tasks",
-        },
-        {
-          value: "openai/gpt-4-turbo",
-          label: "GPT-4 Turbo",
-          hint: "Powerful, more expensive",
-        },
-        {
-          value: "google/gemini-2.0-flash",
-          label: "Gemini 2.0 Flash",
-          hint: "Fast and capable",
-        },
-        {
-          value: "google/gemini-1.5-pro",
-          label: "Gemini 1.5 Pro",
-          hint: "More capable",
-        },
-      ],
+      options: COORDINATOR_MODELS,
       initialValue: DEFAULT_COORDINATOR,
     });
 
@@ -2591,47 +2529,11 @@ async function setup(forceReinstall = false, nonInteractive = false) {
       p.cancel("Setup cancelled");
       process.exit(0);
     }
-    coordinatorModel = selectedCoordinator;
+    coordinatorModel = selectedCoordinator as string;
 
     const selectedWorker = await p.select({
       message: "Select worker model (for task execution):",
-      options: [
-        {
-          value: "anthropic/claude-sonnet-4-5",
-          label: "Claude Sonnet 4.5",
-          hint: "Best balance of speed and capability (recommended)",
-        },
-        {
-          value: "anthropic/claude-haiku-4-5",
-          label: "Claude Haiku 4.5",
-          hint: "Fast and cost-effective",
-        },
-        {
-          value: "anthropic/claude-opus-4-5",
-          label: "Claude Opus 4.5",
-          hint: "Most capable, slower",
-        },
-        {
-          value: "openai/gpt-4o",
-          label: "GPT-4o",
-          hint: "Fast, good for most tasks",
-        },
-        {
-          value: "openai/gpt-4-turbo",
-          label: "GPT-4 Turbo",
-          hint: "Powerful, more expensive",
-        },
-        {
-          value: "google/gemini-2.0-flash",
-          label: "Gemini 2.0 Flash",
-          hint: "Fast and capable",
-        },
-        {
-          value: "google/gemini-1.5-pro",
-          label: "Gemini 1.5 Pro",
-          hint: "More capable",
-        },
-      ],
+      options: WORKER_MODELS,
       initialValue: DEFAULT_WORKER,
     });
 
@@ -2639,33 +2541,11 @@ async function setup(forceReinstall = false, nonInteractive = false) {
       p.cancel("Setup cancelled");
       process.exit(0);
     }
-    workerModel = selectedWorker;
+    workerModel = selectedWorker as string;
 
-    // Lite model selection for simple tasks (docs, tests)
     const selectedLite = await p.select({
       message: "Select lite model (for docs, tests, simple edits):",
-      options: [
-        {
-          value: "anthropic/claude-haiku-4-5",
-          label: "Claude Haiku 4.5",
-          hint: "Fast and cost-effective (recommended)",
-        },
-        {
-          value: "anthropic/claude-sonnet-4-5",
-          label: "Claude Sonnet 4.5",
-          hint: "More capable, slower",
-        },
-        {
-          value: "openai/gpt-4o-mini",
-          label: "GPT-4o Mini",
-          hint: "Fast and cheap",
-        },
-        {
-          value: "google/gemini-2.0-flash",
-          label: "Gemini 2.0 Flash",
-          hint: "Fast and capable",
-        },
-      ],
+      options: LITE_MODELS,
       initialValue: DEFAULT_LITE,
     });
 
@@ -2673,7 +2553,7 @@ async function setup(forceReinstall = false, nonInteractive = false) {
       p.cancel("Setup cancelled");
       process.exit(0);
     }
-    liteModel = selectedLite;
+    liteModel = selectedLite as string;
   }
 
   p.log.success("Selected models:");
