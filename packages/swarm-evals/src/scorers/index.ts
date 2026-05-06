@@ -3,7 +3,7 @@ import { generateText, gateway } from "ai";
 import type { GatewayModelId } from "ai";
 import type { CellTree } from "opencode-swarm-plugin";
 
-const JUDGE_MODEL: GatewayModelId = "anthropic/claude-haiku-4-5";
+const JUDGE_MODEL: GatewayModelId = "opencode-go/deepseek-v4-pro";
 
 /**
  * Custom scorers for evaluating swarm task decomposition quality
