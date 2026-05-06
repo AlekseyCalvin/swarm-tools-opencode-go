@@ -23,7 +23,6 @@ export interface VendorModel {
 
 export interface SwarmConfig {
   primaryModel?: string;
-  liteModel?: string;
 
   coordinatorVendor?: ModelVendor;
   coordinatorModel?: string;
