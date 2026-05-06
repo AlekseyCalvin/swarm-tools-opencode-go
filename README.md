@@ -13,7 +13,7 @@ cd packages/opencode-swarm-plugin
 bun link
 swarm setup
 ```
-*`rm -rf apps` cuts out many random monorepo dependencies gratuitous to most SWARM integrations.*
+*`rm -rf apps` cuts out heavy monorepo dependencies gratuitous to most SWARM integrations.*
 ```
  ███████╗██╗    ██╗ █████╗ ██████╗ ███╗   ███╗
  ██╔════╝██║    ██║██╔══██╗██╔══██╗████╗ ████║
