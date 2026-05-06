@@ -1,6 +1,6 @@
-# SWARM: OpenCode GO Version (Circa May '26)
+# SWARM: OpenCode GO Style (May '26)
 **Updated for Builders on the Proletarian Plan**
-
+This version features the whole OpenCode GO model roster + some fresher GPT/Geminis & freebies in place of SWARM's wired-in Claude-defaults & archaic fallbacks.
 ### Branch Installation (OpenCode)
 ```bash
 git clone https://github.com/AlekseyCalvin/swarm-tools-opencode-go.git
