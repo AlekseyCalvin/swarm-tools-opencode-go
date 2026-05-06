@@ -79,7 +79,7 @@ describe("Event Store", () => {
         project_key: "test-project",
         agent_name: "TestAgent",
         program: "opencode",
-        model: "claude-sonnet-4",
+        model: "nemotron-3-super-free",
       });
 
       const result = await appendEvent(event, TEST_PROJECT_PATH);
@@ -98,7 +98,7 @@ describe("Event Store", () => {
         project_key: "test-project",
         agent_name: "TestAgent",
         program: "opencode",
-        model: "claude-sonnet-4",
+        model: "hy3-preview-free",
         task_description: "Testing the event store",
       });
 
@@ -124,13 +124,13 @@ describe("Event Store", () => {
           project_key: "test-project",
           agent_name: "Agent1",
           program: "opencode",
-          model: "claude-sonnet-4",
+          model: "hy3-preview-free",
         }),
         createEvent("agent_registered", {
           project_key: "test-project",
           agent_name: "Agent2",
           program: "opencode",
-          model: "claude-haiku",
+          model: "nemotron-3-super-free",
         }),
       ];
 
@@ -149,7 +149,7 @@ describe("Event Store", () => {
           project_key: "project-a",
           agent_name: "Agent1",
           program: "opencode",
-          model: "claude-sonnet-4",
+          model: "nemotron-3-super-free",
         }),
         TEST_PROJECT_PATH,
       );
@@ -159,7 +159,7 @@ describe("Event Store", () => {
           project_key: "project-b",
           agent_name: "Agent2",
           program: "opencode",
-          model: "claude-sonnet-4",
+          model: "hy3-preview-free",
         }),
         TEST_PROJECT_PATH,
       );
@@ -180,7 +180,7 @@ describe("Event Store", () => {
           project_key: "test-project",
           agent_name: "Agent1",
           program: "opencode",
-          model: "claude-sonnet-4",
+          model: "hy3-preview-free",
         }),
         TEST_PROJECT_PATH,
       );
@@ -238,7 +238,7 @@ describe("Event Store", () => {
           project_key: "test-project",
           agent_name: "Agent1",
           program: "opencode",
-          model: "claude-sonnet-4",
+          model: "hy3-preview-free",
         }),
         TEST_PROJECT_PATH,
       );
@@ -263,7 +263,7 @@ describe("Event Store", () => {
         "MyAgent",
         {
           program: "opencode",
-          model: "claude-sonnet-4",
+          model: "hy3-preview-free",
           taskDescription: "Testing",
         },
         TEST_PROJECT_PATH,
