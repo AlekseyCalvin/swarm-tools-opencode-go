@@ -263,7 +263,7 @@ const complexityIndicators = [
 ];
 
 if (complexityIndicators.some(k => prompt.toLowerCase().includes(k))) {
-  output.message.model = { modelID: "claude-sonnet-4-5-high" };
+  output.message.model = { modelID: "deepseek-v4-pro" };
   output.message.thinking = { type: "enabled", budget_tokens: 16000 };
 }
 ```
