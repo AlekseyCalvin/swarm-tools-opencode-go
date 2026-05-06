@@ -378,7 +378,7 @@ export function createMemoryAdapter(db: SwarmDb, config: MemoryConfig) {
       // Use real LLM-powered analysis
       // Note: apiKey will come from env (AI_GATEWAY_API_KEY)
       const result = await analyzeMemoryOperation(information, memories, {
-        model: "anthropic/claude-haiku-4-5",
+        model: "opencode-go/deepseek-v4-flash",
         apiKey: process.env.AI_GATEWAY_API_KEY || "",
       });
 
@@ -429,7 +429,7 @@ export function createMemoryAdapter(db: SwarmDb, config: MemoryConfig) {
       // Use real LLM-powered tag generation
       // Note: apiKey will come from env (AI_GATEWAY_API_KEY)
       const result = await generateTags(content, existingTags, {
-        model: "anthropic/claude-haiku-4-5",
+        model: "opencode-go/deepseek-v4-flash",
         apiKey: process.env.AI_GATEWAY_API_KEY || "",
       });
 
