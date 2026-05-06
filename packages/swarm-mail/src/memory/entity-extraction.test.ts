@@ -46,7 +46,7 @@ describe("Entity Extraction", () => {
   test.skip("extractEntitiesAndRelationships returns valid structure", async () => {
     const content = "Joel prefers TypeScript for building Next.js applications";
     const config = {
-      model: "anthropic/claude-haiku-4-5",
+      model: "opencode-go/deepseek-v4-flash",
       apiKey: process.env.AI_GATEWAY_API_KEY!,
     };
 
