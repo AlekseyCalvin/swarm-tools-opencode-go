@@ -1,7 +1,18 @@
-# Swarm
+# SWARM: OpenCode GO Version (Circa May '26)
+**Updated for Builders on the Proletarian Plan**
 
-[![npm version](https://img.shields.io/npm/v/opencode-swarm-plugin.svg)](https://www.npmjs.com/package/opencode-swarm-plugin)
-[![Documentation](https://img.shields.io/badge/docs-swarmtools.ai-blue)](https://swarmtools.ai/docs)
+### Branch Installation (OpenCode)
+```bash
+git clone https://github.com/AlekseyCalvin/swarm-tools-opencode-go.git
+cd swarm-tools-opencode-go
+rm -rf apps
+bun install
+bunx turbo run build --filter=opencode-swarm-plugin
+cd packages/opencode-swarm-plugin
+bun link
+swarm setup
+```
+*`rm -rf apps` cuts out many random monorepo dependencies gratuitous to most SWARM integrations.*
 
 ```
  ███████╗██╗    ██╗ █████╗ ██████╗ ███╗   ███╗
@@ -11,16 +22,15 @@
  ███████║╚███╔███╔╝██║  ██║██║  ██║██║ ╚═╝ ██║
  ╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
 ```
-
-**Multi-agent coordination that survives context death.**
+*Revitalized multi-agent: still survives context death.*
 
 Break big tasks into small ones. Spawn agents to work in parallel. Learn from what works.
-
-> **[swarmtools.ai](https://swarmtools.ai)** · **[Documentation](https://swarmtools.ai/docs)**
+[![npm version](https://img.shields.io/npm/v/opencode-swarm-plugin.svg)](https://www.npmjs.com/package/opencode-swarm-plugin)
+[![Documentation](https://img.shields.io/badge/docs-swarmtools.ai-blue)](https://swarmtools.ai/docs)
 
 ---
 
-## Installation
+## Original Installation Guide
 
 ### OpenCode
 
