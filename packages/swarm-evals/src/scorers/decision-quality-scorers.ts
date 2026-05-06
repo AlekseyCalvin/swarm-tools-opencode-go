@@ -9,7 +9,7 @@ import { createScorer } from "evalite";
 import { generateText, gateway } from "ai";
 import type { GatewayModelId } from "ai";
 
-const JUDGE_MODEL: GatewayModelId = "anthropic/claude-haiku-4-5";
+const JUDGE_MODEL: GatewayModelId = "opencode-go/deepseek-v4-pro";
 
 /**
  * Strategy Selection Quality Scorer
