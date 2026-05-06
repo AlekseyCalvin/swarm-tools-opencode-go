@@ -1433,10 +1433,10 @@ Specialized subagents (invoke with `@agent-name` or auto-dispatched):
 
 | Agent           | Model             | Purpose                                               |
 | --------------- | ----------------- | ----------------------------------------------------- |
-| `swarm-planner` | claude-sonnet-4-5 | Strategic task decomposition for swarm coordination   |
-| `swarm-worker`  | claude-sonnet-4-5 | **PRIMARY for /swarm** - parallel task implementation |
-| `hive`          | claude-haiku      | Work item tracker operations (locked down)            |
-| `archaeologist` | claude-sonnet-4-5 | Read-only codebase exploration, architecture mapping  |
-| `explore`       | claude-haiku-4-5  | Fast codebase search, pattern discovery (read-only)   |
+| `swarm-planner` | deepseek-v4-pro | Strategic task decomposition for swarm coordination   |
+| `swarm-worker`  | deepseek-v4-flash | **PRIMARY for /swarm** - parallel task implementation |
+| `hive`          | deepseek-v4-flash | Work item tracker operations (locked down)            |
+| `archaeologist` | deepseek-v4-pro | Read-only codebase exploration, architecture mapping  |
+| `explore`       | deepseek-v4-flash  | Fast codebase search, pattern discovery (read-only)   |
 | `refactorer`    | default           | Pattern migration across codebase                     |
 | `reviewer`      | default           | Read-only code review, security/perf audits           |
