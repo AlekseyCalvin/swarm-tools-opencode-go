@@ -2,7 +2,7 @@
 ## ╔ **Revived for Builders on the Proletarian Plan** ╗  <br>
 with the OpenCode GO model roster + fresher GPT/Geminis & freebies <br>
 in place of o.g. SWARM's wired-in Claude-defaults & archaic fallbacks.
-#### Branch Installation (OpenCode)
+#### Fork Installation (OpenCode CLI or App + `bun` pre-installed)
 ```bash
 git clone https://github.com/AlekseyCalvin/swarm-tools-opencode-go.git
 cd swarm-tools-opencode-go
